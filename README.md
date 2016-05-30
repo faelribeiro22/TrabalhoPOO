@@ -1,7 +1,7 @@
 # TrabalhoPOO
-SIGH – Sistema Informatizado de Gestão
-Hoteleira
+# SIGH – Sistema Informatizado de Gestão Hoteleira
 Fabricio Leyes Ontivero, Maruan Hamdan, Rafael Ribeiro, Silvano Júnior
+
 1. Objetivo
 Este trabalho tem o objetivo de consolidar o conhecimento sobre Programação
 Orientada a Objetos implementando um sistema para hotéis.
