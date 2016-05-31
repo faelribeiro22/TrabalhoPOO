@@ -4,15 +4,17 @@ import java.util.ArrayList;
 
 public class TelaInicial extends javax.swing.JFrame {
     private GestaoQuartos novo;
+
+    public GestaoQuartos getNovo() {
+        return novo;
+    }
+
+    public void setNovo(GestaoQuartos novo) {
+        this.novo = novo;
+    }
     public TelaInicial() {
         this.novo = new GestaoQuartos();
         initComponents();
-    }
-    
-    public TelaInicial(ArrayList<Cliente> cli, GestaoQuartos novo) {
-        initComponents();
-        this.novo = novo;
-        novo.setHospedes(cli);
     }
 
     /**
@@ -93,7 +95,8 @@ public class TelaInicial extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        TelaDeCadastro telaCadastro = new TelaDeCadastro(novo.getHospedes(),novo);
+        TelaDeCadastro telaCadastro = new TelaDeCadastro();
+        telaCadastro.setNovo(novo);
         telaCadastro.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
