@@ -4,7 +4,15 @@ import java.util.ArrayList;
 
 public class TelaInicial extends javax.swing.JFrame {
     private GestaoQuartos novo;
+    private Hospedagem sis;
 
+    public Hospedagem getSis() {
+        return sis;
+    }
+
+    public void setSis(Hospedagem sis) {
+        this.sis = sis;
+    }
     public GestaoQuartos getNovo() {
         return novo;
     }
@@ -14,6 +22,7 @@ public class TelaInicial extends javax.swing.JFrame {
     }
     public TelaInicial() {
         this.novo = new GestaoQuartos();
+        sis = new Hospedagem();
         initComponents();
     }
 
@@ -44,6 +53,11 @@ public class TelaInicial extends javax.swing.JFrame {
         });
 
         jButton2.setText("Fazer CheckIn");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Fazer Checkout");
 
@@ -100,6 +114,14 @@ public class TelaInicial extends javax.swing.JFrame {
         telaCadastro.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        TelaCheckIn novaTelaCheckIn = new TelaCheckIn();
+        novaTelaCheckIn.setSis(sis);
+        novaTelaCheckIn.setNovo(novo);
+        novaTelaCheckIn.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -12,17 +12,34 @@ public class Hospedagem {
     private Quarto quarto;
     private Cliente cli;
     
-    public Hospedagem(String dataE, String dataS, Quarto quarto, Cliente cli, int hospedes){
+    public boolean CheckIn(String dataE, String dataS, Quarto quarto, Cliente cli, int hospedes){
         this.dataE = dataE;
         this.dataS = dataS;
         this.quarto = quarto;
         //inserir exceção
         if(quarto.getCapacidade() >= hospedes){
             this.cli = cli;
+            return true;
         }
+        return false;
     }
     
-    public boolean verificaDisponibilidade(String dataE1, String dataE2){
+    public boolean verificaDisponibilidade(String dataE1, String dataS1, String dataE2, String dataS2) throws ParseException{
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        DateTime dataE = new DateTime(format.parse(dataE1).getTime());
+        DateTime dataS = new DateTime(format.parse(dataS1).getTime());
+        DateTime dataCE = new DateTime(format.parse(dataE2).getTime());
+        DateTime dataCS = new DateTime(format.parse(dataS2).getTime());
+        if(dataE.isAfter(dataCE) && dataE.isBefore(dataCS))
+            return false;
+        else if(dataE.isEqual(dataCE) || dataE.isEqual(dataCS))
+            return false;
+        else if(dataE.isBefore(dataCE) && dataS.isAfter(dataCS))
+            return false;
+        else if(dataS.isAfter(dataCE) && dataS.isBefore(dataCS))
+            return false;
+        else if(dataS.isBefore(dataCE) && dataS.isBefore(dataCS))
+            return false;
         return true;
     }
     
