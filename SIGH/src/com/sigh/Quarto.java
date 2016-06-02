@@ -71,5 +71,9 @@ public abstract class Quarto {
     public boolean estaOcupado(){
         return cli == null;
     }
+    
+    public boolean verificaCapacidade(int qtd){
+        return this.capacidade <= qtd;
+    }
  
 }

@@ -18,6 +18,19 @@ public class GestaoQuartos {
         master = new ArrayList<>();
         luxo = new ArrayList<>();
         hospedes = new ArrayList<>();
+        int i;
+        for(i=1;i<=5;i++){
+            Standard s = new Standard(i);
+            standard.add(s);
+        }
+        for(i=6;i<=8;i++){
+            Luxo l = new Luxo(i);
+            luxo.add(l);
+        }
+        for(i=9;i<=10;i++){
+            Master m = new Master(i);
+            master.add(m);
+        }
     }
     
     public ArrayList<Cliente> getHospedes(){
