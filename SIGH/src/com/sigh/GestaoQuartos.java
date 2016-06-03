@@ -7,11 +7,21 @@ import java.text.SimpleDateFormat;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
+
 public class GestaoQuartos {
     private ArrayList<Standard> standard;
     private ArrayList<Master> master;
     private ArrayList<Luxo> luxo;
     private ArrayList<Cliente> hospedes;
+    private double valorMensal;
+
+    public double getValorMensal() {
+        return valorMensal;
+    }
+
+    public void setValorMensal(double valorMensal) {
+        this.valorMensal = valorMensal;
+    }
     
     public GestaoQuartos(){
         standard = new ArrayList<>();
@@ -31,6 +41,7 @@ public class GestaoQuartos {
             Master m = new Master(i);
             master.add(m);
         }
+        valorMensal = 0;
     }
     
     public ArrayList<Cliente> getHospedes(){

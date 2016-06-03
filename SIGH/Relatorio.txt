@@ -1,0 +1,2 @@
+Total de quartos 10
+Total de quartos ocupados: 0

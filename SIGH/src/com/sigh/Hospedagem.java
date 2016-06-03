@@ -2,76 +2,60 @@ package com.sigh;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 //import java.util.Date;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
 public class Hospedagem {
-    private String dataE;
-    private String dataS;
+    private Date dataE;
+    private Date dataS;
     private Quarto quarto;
     private Cliente cli;
+    private boolean ativo;
+    private double valor;
     
-    public boolean CheckIn(String dataE, String dataS, Quarto quarto, Cliente cli, int hospedes){
-        this.dataE = dataE;
-        this.dataS = dataS;
-        this.quarto = quarto;
-        //inserir exceção
-        if(quarto.getCapacidade() >= hospedes){
-            this.cli = cli;
-            return true;
-        }
-        return false;
+
+    public double getValor() {
+        return valor;
+    }
+
+    public void setValor(double valor) {
+        this.valor = valor;
     }
     
-    public boolean verificaDisponibilidade(String dataE1, String dataS1, String dataE2, String dataS2) throws ParseException{
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        DateTime dataE = new DateTime(format.parse(dataE1).getTime());
-        DateTime dataS = new DateTime(format.parse(dataS1).getTime());
-        DateTime dataCE = new DateTime(format.parse(dataE2).getTime());
-        DateTime dataCS = new DateTime(format.parse(dataS2).getTime());
-        if(dataE.isAfter(dataCE) && dataE.isBefore(dataCS))
-            return false;
-        else if(dataE.isEqual(dataCE) || dataE.isEqual(dataCS))
-            return false;
-        else if(dataE.isBefore(dataCE) && dataS.isAfter(dataCS))
-            return false;
-        else if(dataS.isAfter(dataCE) && dataS.isBefore(dataCS))
-            return false;
-        else if(dataS.isBefore(dataCE) && dataS.isBefore(dataCS))
-            return false;
-        return true;
+    public Hospedagem(Date e, Date s, Quarto q, Cliente cli){
+        this.dataE = e;
+        this.dataS = s;
+        this.quarto = q;
+        this.cli = cli;
+        this.ativo = true;
     }
     
-    /*
-    public String checkOut() throws ParseException{
-        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-        DateTime data1 = new DateTime(format.parse(dataE).getTime());
-        DateTime data2 = new DateTime(format.parse(dataS).getTime());
-        
-        int diferenca = Days.daysBetween(data1, data2).getDays();
-        
-        
-        return "A diferença é : "+diferenca;
-    }
-    */
-    
-    public String getDataE() {
+    public Date getDataE() {
         return dataE;
     }
 
-    public void setDataE(String dataE) {
+    public void setDataE(Date dataE) {
         this.dataE = dataE;
     }
 
-    public String getDataS() {
+    public Date getDataS() {
         return dataS;
     }
 
-    public void setDataS(String dataS) {
+    public void setDataS(Date dataS) {
         this.dataS = dataS;
     }
 
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+    
     public Quarto getQuarto() {
         return quarto;
     }
@@ -86,6 +70,24 @@ public class Hospedagem {
 
     public void setCli(Cliente cli) {
         this.cli = cli;
+    }
+    
+    public String checkOut(Date s){
+        int diarias;
+        DateTime dataS= new DateTime(s);
+        DateTime dataSR = new DateTime(this.dataS);
+        DateTime dataER = new DateTime(this.dataE);
+        
+        if(dataS.isEqual(dataSR)){
+           diarias = Days.daysBetween(dataER, dataSR).getDays();
+           valor = diarias * quarto.getValorDiaria();
+           return "O valor da diário foi "+valor+". A quantidade de diárias foi de "+diarias;
+        }else{
+            diarias = Days.daysBetween(dataER, dataS).getDays();
+            valor = diarias * quarto.getValorDiaria();
+            return "O valor da diário foi "+valor+". A quantidade de diárias foi de "+diarias;
+        }
+        
     }
     
 }

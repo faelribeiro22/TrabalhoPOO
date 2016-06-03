@@ -4,6 +4,7 @@ import javax.swing.JOptionPane;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 //import java.util.Date;
@@ -34,7 +35,45 @@ public class TelaCheckIn extends javax.swing.JFrame {
     public void setNovo(GestaoQuartos novo) {
         this.novo = novo;
     }
-
+    
+    public boolean checkIn(GestaoQuartos n,int num,Cliente cli,int posCli, Date e, Date s, int qtdH){
+        Quarto quarto = null;
+        int totalQuartos = n.getLuxo().size() + n.getMaster().size() + n.getStandard().size();
+        for(int i=0; i<totalQuartos;i++ ){
+            if(n.getLuxo().get(i).getNum() == num && !n.getLuxo().get(i).estaOcupado()){
+               if(n.getLuxo().get(i).verificaCapacidade(qtdH)){
+                    if(n.getLuxo().get(i).dataVagas(e, s)){
+                        n.getLuxo().get(i).setCli(cli);
+                        sis = new Hospedagem(e,s,n.getLuxo().get(i),cli);
+                        cli.getHistorico().add(sis);
+                        return true;
+                    }else{
+                        return false;
+                    }
+               }
+            }else if(n.getMaster().get(i).getNum() == num && !n.getMaster().get(i).estaOcupado()){
+                        if(n.getMaster().get(i).dataVagas(e, s) && n.getMaster().get(i).verificaCapacidade(qtdH)){
+                            n.getMaster().get(i).setCli(cli);
+                            sis = new Hospedagem(e,s,n.getMaster().get(i),cli);
+                            cli.getHistorico().add(sis);
+                            return true;
+                        }else{
+                            return false;
+                        }
+                    }else if(n.getStandard().get(i).getNum() == num && !n.getStandard().get(i).estaOcupado()){
+                        if(n.getStandard().get(i).dataVagas(e, s) && n.getStandard().get(i).verificaCapacidade(qtdH)){
+                            n.getStandard().get(i).setCli(cli);
+                            sis = new Hospedagem(e,s,n.getStandard().get(i),cli);
+                            cli.getHistorico().add(sis);
+                            return true;
+                        }else{
+                            return false;
+                        }
+                    }   
+            }
+        return false;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -224,47 +263,7 @@ public class TelaCheckIn extends javax.swing.JFrame {
                cli = novo.getHospedes().get(i);
            }
        }
-       boolean isLuxo = false,isStandard = false ,ehMaster = false;
-       int qtd = novo.getStandard().size() + novo.getLuxo().size() + novo.getMaster().size();
-       for(int i = 0; i<qtd;i++){
-           if(numQ == novo.getLuxo().get(i).getNum()){
-               quarto = novo.getLuxo().get(i);
-               isLuxo = true;
-               break;
-           }else if(numQ == novo.getMaster().get(i).getNum()){
-               quarto = novo.getMaster().get(i);
-               isStandard = true;
-               break;
-           }else if(numQ == novo.getStandard().get(i).getNum()){
-               quarto = novo.getStandard().get(i);
-               ehMaster = true;
-               break;
-           }
-       }
-       
-        try {
-            if(sis.verificaDisponibilidade(dataE, dataS, quarto.getDataE(),quarto.getDataS())){
-                sis.CheckIn(dataE, dataS, quarto, cli, hospedes);
-                novaTelaInicio.setSis(sis);
-                if(isLuxo == true){
-                    novaTelaInicio.getNovo().getLuxo().add((Luxo)quarto);
-                }else if(isStandard == true)
-                    novaTelaInicio.getNovo().getStandard().add((Standard)quarto);
-                else if(ehMaster == true)
-                    novaTelaInicio.getNovo().getMaster().add((Master)quarto);
-            }} catch (ParseException ex) {
-            Logger.getLogger(TelaCheckIn.class.getName()).log(Level.SEVERE, null, ex);
-        }
-       if(!cliCadastrado){
-           JOptionPane.showMessageDialog(null,"Cliente não cadastrado, favor efetuar cadastro!");
-           this.setVisible(false);
-           novaTelaInicio.setVisible(true);
-       }else{
-           JOptionPane.showMessageDialog(null,"CheckIN efetuado com sucesso!");
-           novaTelaInicio.setNovo(novo);
-           this.setVisible(false);
-           novaTelaInicio.setVisible(true);
-       }
+       if(this.checkIn(novo, numQ, cli, codCli, e, s, WIDTH))
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

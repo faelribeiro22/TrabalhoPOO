@@ -1,6 +1,10 @@
 package com.sigh;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class TelaInicial extends javax.swing.JFrame {
     private GestaoQuartos novo;
@@ -64,6 +68,11 @@ public class TelaInicial extends javax.swing.JFrame {
         jButton4.setText("Fazer Reserva");
 
         jButton5.setText("Relátorio do Hotel");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton6.setText("Consulta por Cliente");
 
@@ -122,6 +131,18 @@ public class TelaInicial extends javax.swing.JFrame {
         novaTelaCheckIn.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        
+        GerarRelatorio arquivo = new GerarRelatorio();
+        try {
+            arquivo.gerarRelatorio(novo);
+            JOptionPane.showMessageDialog(null,"Relatorio gerado com sucesso!");
+        } catch (IOException ex) {
+            Logger.getLogger(TelaInicial.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments

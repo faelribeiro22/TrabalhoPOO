@@ -6,5 +6,5 @@ public class Luxo extends Quarto{
         this.setCapacidade(4);
         this.setValorDiaria(200.00);
     }
-    
+   
 }
