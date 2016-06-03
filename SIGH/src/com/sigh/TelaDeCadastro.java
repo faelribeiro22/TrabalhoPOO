@@ -136,7 +136,7 @@ public class TelaDeCadastro extends javax.swing.JFrame {
         this.cli.add(novoCli);
         JOptionPane.showMessageDialog(null,"Cadastro efetuado com sucesso");
         TelaInicial telaInicial = new TelaInicial();
-        telaInicial.setNovo(novo);
+        telaInicial.getNovo().getHospedes().add(novoCli);
         telaInicial.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed

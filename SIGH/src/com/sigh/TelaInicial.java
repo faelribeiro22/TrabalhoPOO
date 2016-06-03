@@ -26,7 +26,6 @@ public class TelaInicial extends javax.swing.JFrame {
     }
     public TelaInicial() {
         this.novo = new GestaoQuartos();
-        sis = new Hospedagem();
         initComponents();
     }
 

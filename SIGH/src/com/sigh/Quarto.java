@@ -93,6 +93,8 @@ public abstract class Quarto {
     
     public Quarto(int num){
         this.num = num;
+        this.entrada = new ArrayList<Date>();
+        this.saida = new ArrayList<Date>();
     }
     
     public boolean estaOcupado(){
@@ -107,7 +109,12 @@ public abstract class Quarto {
         DateTime data = new DateTime(e);
         DateTime datas = new DateTime(s);
         boolean vago = false;
-        for(int i=0;i<entrada.size();i++){
+        if(entrada.isEmpty()){
+            entrada.add(e);
+            saida.add(s);
+            return true;
+        }else{
+            for(int i=0;i<=entrada.size();i++){
             DateTime dataRE = new DateTime(entrada.get(i).getTime());
             DateTime dataRS = new DateTime(saida.get(i).getTime());
             if(!data.isAfter(dataRE) && !data.isBefore(dataRS) && !data.isBefore(dataRE) && !data.isAfter(dataRS) && !data.isEqual(dataRE) && !data.isEqual(dataRS) || dataRE == null || dataRS == null){
@@ -125,5 +132,6 @@ public abstract class Quarto {
         }else
             return false;
     }
+        }
  
 }
